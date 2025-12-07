@@ -1,0 +1,32 @@
+
+import pygame
+pygame init
+
+clock = pygame.time.Clock()
+
+window = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption('Space Shoter')
+
+
+
+
+
+
+
+----------------------------------------------------------------------
+while:
+    for event in pygame.event.get():
+        if event.type == pygame.   __КНОПКА__   :
+            ДЕЙСТВИЕ
+
+    pygame.display.update()
+    clock.tick(60)
+-----------------------------------------------------------------------
+
+
+
+-----------------------------------------------------------------
+    """Поворачивает картинку на 90 градусов по часовой стрелке"""
+
+    КАРТИНКА   = pygame.transform.rotate(  КАРТИНКА  , ГРАДУСЫ   )
+------------------------------------------------------------------
