@@ -84,10 +84,6 @@ class Player1(GameSprite):
             self.speed_x -= self.speed
         if keys_pressed[pygame.K_d]:
             self.speed_x += self.speed
-        # if keys_pressed[pygame.K_w]:
-        #     self.speed_y -= self.speed * 0.7
-        # if keys_pressed[pygame.K_s]:
-        #     self.speed_y += self.speed
 
         if self.speed_x > self.speed_max:
             self.speed_x -= self.speed
@@ -224,14 +220,8 @@ class Ball(GameSprite):
         self.speed_x = speed_x
         self.speed_y = speed_y
         self.speed = 2
-    def otckok(self):
-        self.speed_x = -self.speed_x
-        self.speed_y = -self.speed_y
-        self.speed = -self.speed
 
     def update(self):
-        global score_1
-        global score_2
         self.rect.x += self.speed_x
         self.rect.y += self.speed_y
         if self.rect.x < 0:
@@ -245,10 +235,23 @@ class Ball(GameSprite):
             self.speed_y -= self.speed * 1.2
 
 
+        if pygame.sprite.collide_rect(player_1, ball):
+            ball.speed_y = -ball.speed_y
+        if pygame.sprite.collide_rect(player_2, ball):
+            ball.speed_y = -ball.speed_y
+
+
 
 background = GameSprite(random.choice(backgrounds_images), 0, 0, WIDTH, HEIGHT)
+
 player_1 = Player1(player_images[0], WIDTH / 2 - 60, HEIGHT -20, 90, 90, 5, 5, 10, 12)
 player_2 = Player2(player_images[0], WIDTH / 2 - 60, HEIGHT -980, 90, 90, 5, 5, 10, 12)
+
+player_2.rotate()
+player_2.rotate()
+
+players = [player_1, [player_2]]
+
 ball = Ball('Images/balls/img.png', WIDTH/2-60, HEIGHT/2-60, 100, 100, 5, 5)
 
 game = True
@@ -263,7 +266,6 @@ while game:
 
     ball.draw()
     ball.update()
-
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:

@@ -2,23 +2,19 @@ import time
 import pygame
 pygame.init()
 from PIL import Image
-from config import *
 import random
 import math
 
-WIDTH = 1200
+WIDTH = 1000
 HEIGHT = 1000
 
-score = 0
+window = ...
+path = ...
+clock = ...
+player = ...
+enemies = ...
 
-clock = pygame.time.Clock()
 
-max_enemies = 1
-
-window = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption('Space Shoter')
-
-enemies = []
 
 
 def get_cropped(path: str):
@@ -211,89 +207,3 @@ class Label(Area):
     def draw(self, shift_x=0, shift_y=0):
         self.fill()
         window.blit(self.image, (self.rect.x + shift_x, self.rect.y + shift_y))
-
-background = GameSprite(random.choice(backgrounds_images), 0, 0, WIDTH, HEIGHT)
-player = Player(player_images[0], WIDTH / 2 - 60, HEIGHT, 90, 90, 5, 5, 10, 12, 1)
-
-
-
-score_text = Label(10, 10, 0, 0 , (0, 0, 0))
-kd_text = Label(500, 500,  30, 0, (0, 250, 250))
-
-game = True
-
-health = 0
-
-while game:
-    background.draw()
-    if score >= 1000:
-        show_screen('Победа!')
-        exit()
-    if score <= -100:
-        show_screen('Поражение!')
-        exit()
-
-    score_text.set_text(f'Очки: {score}', fsize=20, text_color=(0, 250, 250))
-    score_text.draw()
-    if player.kd > 0:
-        kd_text.set_text(f'Задержка: {player.kd}', fsize=20, text_color=(0, 250, 250))
-        kd_text.draw()
-
-    player.draw()
-    player.update()
-
-    while len(enemies) < max_enemies:
-        size_kf = random.uniform(1, 1.8)
-        enemy = Enemy(player_image=random.choice(en_images),
-                      player_x=random.randint(-10, WIDTH),
-                      player_y=random.uniform(-100, -50),
-                      width=35 * size_kf,
-                      height=35 * size_kf,
-                      speed_x=random.uniform(0.2,0.5),
-                      speed_y=random.uniform(4,7),)
-        enemies.append(enemy)
-
-
-
-
-    for enemy in enemies:
-        enemy.update()
-        enemy.draw()
-        if pygame.sprite.collide_rect(player, enemy):
-            health += 1
-            max_enemies //= 2
-            if health > len(player_images) - 1:
-                health = len(player_images) - 1
-                show_screen('Вы проиграли')
-            while len(enemies) > 0:
-                enemies.pop(0)
-            player = Player(player_images[health], player.rect.x, player.rect.y, 90, 90, 5, 5, 10, 12, player.kd)
-            break
-    try:
-        for bullet in Bullet.bullets:
-            bullet.update()
-            bullet.draw()
-            for enemy in enemies:
-                if pygame.sprite.collide_rect(bullet, enemy):
-                    enemies.remove(enemy)
-                    Bullet.bullets.remove(bullet)
-                    max_enemies += 1
-                    player.kd -= 0.1
-                    score += 1
-    except:
-        print('Ошибка удаления')
-
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            game = False
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            x_go, y_go = event.pos
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_ESCAPE:
-                game = False
-            if event.key == pygame.K_q:
-                score += 500
-
-
-    pygame.display.update()
-    clock.tick(60)
