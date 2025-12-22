@@ -237,15 +237,18 @@ class Ball(GameSprite):
 
         if pygame.sprite.collide_rect(player_1, ball):
             ball.speed_y = -ball.speed_y
+            global score_1
+            score_1 += 1
         if pygame.sprite.collide_rect(player_2, ball):
             ball.speed_y = -ball.speed_y
-
+            global score_2
+            score_2 += 1
 
 
 background = GameSprite(random.choice(backgrounds_images), 0, 0, WIDTH, HEIGHT)
 
-player_1 = Player1(player_images[0], WIDTH / 2 - 60, HEIGHT -20, 90, 90, 5, 5, 10, 12)
-player_2 = Player2(player_images[0], WIDTH / 2 - 60, HEIGHT -980, 90, 90, 5, 5, 10, 12)
+player_1 = Player1(player_images[0], WIDTH / 2 - 60, HEIGHT -20, 90, 90, 10, 10, 15, 15)
+player_2 = Player2(player_images[0], WIDTH / 2 - 60, HEIGHT -980, 90, 90, 10, 10, 15, 15)
 
 player_2.rotate()
 player_2.rotate()
@@ -254,9 +257,18 @@ players = [player_1, [player_2]]
 
 ball = Ball('Images/balls/img.png', WIDTH/2-60, HEIGHT/2-60, 100, 100, 5, 5)
 
+score_1_text = Label(10, 10, 0, 0 , (0, 0, 0))
+score_2_text = Label(999, 10, 0, 0 , (0, 0, 0))
+
 game = True
 while game:
     background.draw()
+
+    score_1_text.set_text(f'Очки: {score_1}', fsize=20, text_color=(0, 250, 250))
+    score_1_text.draw()
+
+    score_2_text.set_text(f'Очки: {score_2}', fsize=20, text_color=(0, 250, 250))
+    score_2_text.draw()
 
     player_1.draw()
     player_1.update()
