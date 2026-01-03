@@ -247,8 +247,8 @@ class Ball(GameSprite):
 
 background = GameSprite(random.choice(backgrounds_images), 0, 0, WIDTH, HEIGHT)
 
-player_1 = Player1(player_images[0], WIDTH / 2 - 60, HEIGHT -20, 90, 90, 10, 10, 15, 15)
-player_2 = Player2(player_images[0], WIDTH / 2 - 60, HEIGHT -980, 90, 90, 10, 10, 15, 15)
+player_1 = Player1(player_images[0], WIDTH / 2 - 60, HEIGHT -20, 90, 90, 100, 100, 150, 150)
+player_2 = Player2(player_images[0], WIDTH / 2 - 60, HEIGHT -980, 90, 90, 100, 100, 150, 150)
 
 player_2.rotate()
 player_2.rotate()
