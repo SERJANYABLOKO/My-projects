@@ -31,5 +31,5 @@ class Database:
 		with open(f'{self.filename}', 'w', encoding='UTF-8') as file:
 			json.dump(data, file, ensure_ascii=False, indent=4)
 
-# db = Database('my.json')
+# db = Database('filename.json')
 # db.save_data(data)
