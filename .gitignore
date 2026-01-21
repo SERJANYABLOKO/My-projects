@@ -4,3 +4,5 @@ __pycache__/
 dist/
 Zametki/
 SystemInfo/
+system_info.json
+filename.json
